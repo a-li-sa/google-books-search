@@ -8,6 +8,9 @@ import Paper from '@material-ui/core/Paper';
 import useBooks from '../hooks/useBooks'
 import { blue } from "@material-ui/core/colors";
 import Box from '@material-ui/core/Box';
+import CloseIcon from '@material-ui/icons/Close';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -49,6 +52,10 @@ export const SearchBar = () => {
 
   const onMouseOver = () => setShadow('3');
   const onMouseOut = () => setShadow('0');
+  const onClear = () => {
+    setTerm('')
+    document.getElementById("searchBar").focus();
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -56,9 +63,18 @@ export const SearchBar = () => {
         <Box variant="outlined" boxShadow={shadow} component={Paper}className={classes.root} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
           <InputBase
             className={classes.input}
-            id="search" fullWidth value={term} onChange={event => setTerm(event.target.value)}
+            id="searchBar" fullWidth value={term} onChange={event => setTerm(event.target.value)}
           />
-          <Divider className={classes.divider} orientation="vertical" />
+          {term !== '' ? (
+            <React.Fragment>
+              <Tooltip title="Clear" placement="bottom">
+                <IconButton className={classes.iconButton} style={{ backgroundColor: 'transparent' }} onClick={onClear}>
+                  <CloseIcon/>
+                </IconButton>
+              </Tooltip>
+            <Divider className={classes.divider} orientation="vertical" />
+            </React.Fragment>
+            ) : ''}
           <IconButton type="submit" color="primary" className={classes.iconButton} aria-label="search" style={{ backgroundColor: 'transparent' }}>
             <SearchIcon />
           </IconButton>
