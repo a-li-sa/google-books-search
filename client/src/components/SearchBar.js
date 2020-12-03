@@ -44,14 +44,19 @@ export const SearchBar = () => {
   const {books, search } = useBooks('');
   const [term, setTerm] = useState('');
   const [shadow, setShadow] = useState('');
+  const [selected, setSelected] = useState(false)
 
   const onSubmit = (event) => {
     event.preventDefault();
     search(term);
   }
-
   const onMouseOver = () => setShadow('3');
-  const onMouseOut = () => setShadow('0');
+  const onSelect = () => setSelected(true);
+  const onBlur = () => {
+    setSelected(false);
+    setShadow('0')
+  }
+  const onMouseLeave = () => selected ? setShadow('3') : setShadow('0');
   const onClear = () => {
     setTerm('')
     document.getElementById("searchBar").focus();
@@ -60,10 +65,11 @@ export const SearchBar = () => {
   return (
     <ThemeProvider theme={theme}>
       <form noValidate autoComplete="off" onSubmit={onSubmit} >
-        <Box variant="outlined" boxShadow={shadow} component={Paper}className={classes.root} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+        <Box variant="outlined" boxShadow={shadow} component={Paper}className={classes.root} onMouseLeave={onMouseLeave} onMouseOver={onMouseOver} onSelect={onSelect} onBlur={onBlur}>
           <InputBase
             className={classes.input}
-            id="searchBar" fullWidth value={term} onChange={event => setTerm(event.target.value)}
+            id="searchBar" fullWidth value={term}
+            onChange={event => setTerm(event.target.value)}
           />
           {term !== '' ? (
             <React.Fragment>
