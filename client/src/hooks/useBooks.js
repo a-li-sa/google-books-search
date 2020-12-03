@@ -15,13 +15,13 @@ const useBooks = (defaultSearchTerm) => {
       const response = await googleBooks.get("/", {
         params: {
           q: term,
-          maxResults: 5,
+          maxResults: 10,
         }
       });
       const booksArray = []
       response.data.items.forEach(item => {
         const book = {}
-        const {title, description, infoLink, authors, imageLinks} = item.volumeInfo;
+        const {title, description, infoLink, authors, imageLinks } = item.volumeInfo;
         book.title = title;
         book.authors = authors;
         book.description = description;
@@ -30,7 +30,7 @@ const useBooks = (defaultSearchTerm) => {
         booksArray.push(book);
       })
       console.log(booksArray)
-      setBooks(response.data.items)
+      setBooks(booksArray)
     } catch (e) {
       console.log(`Your search - ${term} - did not match any book results. 
       

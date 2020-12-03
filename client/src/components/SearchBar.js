@@ -11,10 +11,17 @@ import Box from '@material-ui/core/Box';
 import CloseIcon from '@material-ui/icons/Close';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import {BookList} from '../components';
+
 
 const theme = createMuiTheme({
   palette: {
-    primary: blue,
+    primary: {
+      main: '#2979ff'
+    },
+    secondary: {
+      main: '#283593'
+    },
   },
 });
 
@@ -86,6 +93,7 @@ export const SearchBar = () => {
           </IconButton>
         </Box>
       </form>
+      <BookList books={books}/>
     </ThemeProvider>
   )
 }
