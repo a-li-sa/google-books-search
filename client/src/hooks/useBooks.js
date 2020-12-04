@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import googleBooks from "../apis/googleBooksApi";
 
-const useBooks = () => {
+const useBooks = (defaultSearchTerm) => {
   const [books, setBooks] = useState([]);
   const [searchError, setSearchError] = useState(false);
+
+  useEffect(() => {
+    search('JavaScript');
+  }, [defaultSearchTerm]);
 
   const search = async term => {
     try {

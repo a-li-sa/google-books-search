@@ -9,11 +9,9 @@ import Box from '@material-ui/core/Box';
 import CloseIcon from '@material-ui/icons/Close';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import useBooks from '../hooks/useBooks'
-
 import {BookList, ErrorDisplay, Navbar, SavedList } from '../components';
 import {getBooks} from "../apis/booksApi";
-
+import useBooks from '../hooks/useBooks'
 
 const theme = createMuiTheme({
   palette: {
@@ -29,10 +27,14 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginLeft: 50,
+    marginRight: 50,
+  },
+  searchBar: {
     padding: '0px 0px 0px 18px',
     display: 'flex',
     alignItems: 'center',
-    borderRadius: "50px"
+    borderRadius: "50px",
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -84,11 +86,12 @@ export const SearchPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <form noValidate autoComplete="off" onSubmit={onSubmit} >
-        <Box variant="outlined" boxShadow={shadow} component={Paper}className={classes.root} onMouseLeave={onMouseLeave} onMouseOver={onMouseOver} onSelect={onSelect} onBlur={onBlur}>
+      <form className={classes.root} noValidate autoComplete="off" onSubmit={onSubmit} >
+        <Box mt={3} ml={3} mr={3} variant="outlined" boxShadow={shadow} component={Paper}className={classes.searchBar} onMouseLeave={onMouseLeave} onMouseOver={onMouseOver} onSelect={onSelect} onBlur={onBlur}>
           <InputBase
             className={classes.input}
             id="searchBar" fullWidth value={term}
+            placeholder={lastTerm ? `Search "${lastTerm}"` : 'Search "JavaScript"'}
             onChange={event => setTerm(event.target.value)}
           />
           {term !== '' ? (
@@ -106,7 +109,14 @@ export const SearchPage = () => {
           </IconButton>
         </Box>
       </form>
-      <Navbar search={searchError ? <ErrorDisplay term={lastTerm}/> : <BookList books={books}/>} saved={<SavedList books={savedBooks}/>}/>
+      <Navbar
+        search={
+          searchError
+          ? <ErrorDisplay term={lastTerm} className={classes.root}/>
+          : <BookList books={books} className={classes.root}/>
+        }
+        saved={<SavedList books={savedBooks}/>}
+      />
     </ThemeProvider>
   )
 }
