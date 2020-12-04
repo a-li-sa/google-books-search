@@ -11,7 +11,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import useBooks from '../hooks/useBooks'
 
-import {BookList, Navbar, SavedList } from '../components';
+import {BookList, ErrorDisplay, Navbar, SavedList } from '../components';
 import {getBooks} from "../apis/booksApi";
 
 
@@ -49,8 +49,9 @@ const useStyles = makeStyles((theme) => ({
 export const SearchPage = () => {
   const classes = useStyles();
 
-  const {books, search } = useBooks('');
+  const {books, search, searchError, setSearchError } = useBooks('');
   const [term, setTerm] = useState('');
+  const [lastTerm, setLastTerm] = useState('');
   const [shadow, setShadow] = useState('');
   const [selected, setSelected] = useState(false)
   const [savedBooks, setSavedBooks] = useState([]);
@@ -63,6 +64,8 @@ export const SearchPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    setSearchError(false);
+    setLastTerm(term);
     search(term);
     document.getElementById('searchTab').click();
   }
@@ -103,7 +106,7 @@ export const SearchPage = () => {
           </IconButton>
         </Box>
       </form>
-      <Navbar search={<BookList books={books}/>} saved={<SavedList books={savedBooks}/>}/>
+      <Navbar search={searchError ? <ErrorDisplay term={lastTerm}/> : <BookList books={books}/>} saved={<SavedList books={savedBooks}/>}/>
     </ThemeProvider>
   )
 }

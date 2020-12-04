@@ -15,8 +15,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 })
   .catch(e => console.log(e));
 
-mongoose.set('debug', true);
-
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

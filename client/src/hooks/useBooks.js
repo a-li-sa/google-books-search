@@ -3,6 +3,7 @@ import googleBooks from "../apis/googleBooksApi";
 
 const useBooks = () => {
   const [books, setBooks] = useState([]);
+  const [searchError, setSearchError] = useState(false);
 
   const search = async term => {
     try {
@@ -25,19 +26,15 @@ const useBooks = () => {
       })
       setBooks(booksArray)
     } catch (e) {
-      console.log(`Your search - ${term} - did not match any book results. 
-      
-Suggestions: 
-      * Make sure all words are spelled correctly.
-      * Try different keywords.
-      * Try more general keywords.
-      * Try fewer keywords.`)
+      setSearchError(true);
     }
   };
 
   return {
     books,
     search,
+    searchError,
+    setSearchError
   }
 }
 
