@@ -5,7 +5,7 @@ module.exports = {
   getBooks: async (req, res) => {
     try {
       db.find({})
-        .then(books => res.send(books))
+        .then(books => res.json(books))
     } catch (e) {
       console.log(e)
       res.status(401).json(e);

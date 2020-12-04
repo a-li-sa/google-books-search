@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import SearchIcon from '@material-ui/icons/Search'
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
-import useBooks from '../hooks/useBooks'
-import { blue } from "@material-ui/core/colors";
 import Box from '@material-ui/core/Box';
 import CloseIcon from '@material-ui/icons/Close';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import {BookList} from '../components';
+import useBooks from '../hooks/useBooks'
+
+import {BookList, Navbar, SavedList } from '../components';
+import {getBooks} from "../apis/booksApi";
 
 
 const theme = createMuiTheme({
@@ -45,18 +46,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SearchBar = () => {
+export const SearchPage = () => {
   const classes = useStyles();
 
   const {books, search } = useBooks('');
   const [term, setTerm] = useState('');
   const [shadow, setShadow] = useState('');
   const [selected, setSelected] = useState(false)
+  const [savedBooks, setSavedBooks] = useState([]);
+
+  useEffect(() => {
+    getBooks().then(res => {
+      setSavedBooks(res.data)
+    });
+  }, [])
 
   const onSubmit = (event) => {
     event.preventDefault();
     search(term);
+    document.getElementById('searchTab').click();
   }
+
   const onMouseOver = () => setShadow('3');
   const onSelect = () => setSelected(true);
   const onBlur = () => {
@@ -85,15 +95,15 @@ export const SearchBar = () => {
                   <CloseIcon/>
                 </IconButton>
               </Tooltip>
-            <Divider className={classes.divider} orientation="vertical" />
+              <Divider className={classes.divider} orientation="vertical" />
             </React.Fragment>
-            ) : ''}
+          ) : ''}
           <IconButton type="submit" color="primary" className={classes.iconButton} aria-label="search" style={{ backgroundColor: 'transparent' }}>
             <SearchIcon />
           </IconButton>
         </Box>
       </form>
-      <BookList books={books}/>
+      <Navbar search={<BookList books={books}/>} saved={<SavedList books={savedBooks}/>}/>
     </ThemeProvider>
   )
 }

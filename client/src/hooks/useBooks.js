@@ -4,12 +4,6 @@ import googleBooks from "../apis/googleBooksApi";
 const useBooks = (defaultSearchTerm) => {
   const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    if (defaultSearchTerm !== '') {
-      search(defaultSearchTerm);
-    }
-  }, [defaultSearchTerm]);
-
   const search = async term => {
     try {
       const response = await googleBooks.get("/", {
@@ -29,7 +23,6 @@ const useBooks = (defaultSearchTerm) => {
         book.link = infoLink;
         booksArray.push(book);
       })
-      console.log(booksArray)
       setBooks(booksArray)
     } catch (e) {
       console.log(`Your search - ${term} - did not match any book results. 
@@ -41,12 +34,6 @@ Suggestions:
       * Try fewer keywords.`)
     }
   };
-
-  // title: String,
-  //   authors: [String],
-  //   description: String,
-  //   image: String,
-  //   link: String,
 
   return {
     books,

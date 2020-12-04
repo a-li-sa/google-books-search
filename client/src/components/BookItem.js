@@ -40,7 +40,9 @@ export const BookItem = ({book}) => {
                 </Link>
               </Typography>
               <Box mt={1} mb={1}>
-                <Typography variant="body2">{book.authors.join(', ')}</Typography>
+                {book.authors ? (
+                  <Typography variant="body2">{book.authors.join(', ')}</Typography>
+                ) : ''}
               </Box>
               {book.description ? (
                 <React.Fragment>
