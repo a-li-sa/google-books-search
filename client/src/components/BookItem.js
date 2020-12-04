@@ -28,7 +28,7 @@ export const BookItem = ({book}) => {
 
   return (
       <Box className={classes.root}>
-        <Box pt={2} className={classes.paper}>
+        <Box pb={2} className={classes.paper}>
           <Grid container wrap="nowrap" spacing={2}>
             <Grid item>
               <img src={book.image} alt={book.title}/>

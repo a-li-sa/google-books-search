@@ -24,8 +24,8 @@ module.exports = {
   },
   deleteBook: async (req, res) => {
     const { id } = req.params;
-    Book.findByIdAndRemove(id);
-    res.send(`Deleted ${id}`);
+    Book.findByIdAndRemove(id)
+      .then(book => res.json(book));
     try {
     } catch (e) {
       console.log(e)

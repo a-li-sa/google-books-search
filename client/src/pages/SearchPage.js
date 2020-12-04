@@ -59,7 +59,7 @@ export const SearchPage = () => {
     getBooks().then(res => {
       setSavedBooks(res.data)
     });
-  }, [])
+  }, [savedBooks])
 
   const onSubmit = (event) => {
     event.preventDefault();

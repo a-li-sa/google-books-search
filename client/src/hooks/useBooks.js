@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import googleBooks from "../apis/googleBooksApi";
 
-const useBooks = (defaultSearchTerm) => {
+const useBooks = () => {
   const [books, setBooks] = useState([]);
 
   const search = async term => {

@@ -48,7 +48,7 @@ export const Navbar = (props) => {
 
   return (
     <div>
-      <AppBar position="static" color="transparent" elevation="0">
+      <AppBar position="static" color="transparent" elevation={0}>
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Search" {...a11yProps(0)} id="searchTab" />
           <Tab label="Saved" {...a11yProps(1)} />
