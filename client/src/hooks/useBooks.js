@@ -29,6 +29,7 @@ const useBooks = (defaultSearchTerm) => {
         booksArray.push(book);
       })
       setBooks(booksArray)
+      document.getElementById('searchTab').click();
     } catch (e) {
       setSearchError(true);
     }

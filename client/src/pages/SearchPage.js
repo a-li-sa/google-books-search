@@ -69,7 +69,6 @@ export const SearchPage = () => {
     setSearchError(false);
     setLastTerm(term);
     search(term);
-    document.getElementById('searchTab').click();
   }
 
   const onMouseOver = () => setShadow('3');
